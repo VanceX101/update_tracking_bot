@@ -54,6 +54,9 @@ n8n start
 
 5. Set up the AI Browser to run on a schedule or trigger it based on order status updates.
 
+## Project Structure
+
+```bash
 amazon-tracking-automation/
 ├── README.md
 ├── ai-browser-scripts/
@@ -63,5 +66,6 @@ amazon-tracking-automation/
 │   └── giaonhan247-tracking-update.json
 └── config/
     └── credentials.json
+
 Project Owner: Vance Nguyen
 Email: vance.nguyen@example.com
