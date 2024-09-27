@@ -1,0 +1,185 @@
+{
+    "input": {
+        "comment": "Kết quả mong muốn là mỗi asin match phải trả về order ID, tracking number và số lượng sản phẩm tương ứng",
+        "api_key": "apizer_www_amazon_com-53d6495a",
+        "track_package_link": "https://www.amazon.com/progress-tracker/package/ref=pt_redirect_from_gp?_encoding=UTF8&from=gp&itemId=jgspswisprlwtop&orderId=113-5384382-7505052&packageIndex=0&shipmentId=313800482023301"
+    },
+    "action": [
+        {
+            "action": "scripting",
+            "target": "window.location.assign(apizer_input.track_package_link);",
+            "variable": "dummy",
+            "label": "Truy cập vào trang Track Your Package"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "5000"
+        },
+        {
+            "action": "scripting",
+            "target": "const asinLinks = document.querySelectorAll('a[href*=\"/gp/product/\"]'); const asins = []; const quantities = []; asinLinks.forEach(link => { const href = link.getAttribute('href'); const asinMatch = href.match(/\\/gp\\/product\\/([^/?]+)/); if (asinMatch) { asins.push(asinMatch[1]); const quantityElement = link.querySelector('.a-size-mini.images-quantity-label'); const quantity = quantityElement ? quantityElement.textContent.trim() : '1'; quantities.push(quantity); } }); return { asins: [...new Set(asins)], quantities: quantities };",
+            "variable": "asins_and_quantities",
+            "label": "Trích xuất Asin và số lượng từ Track Package"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('ASINs and Quantities from package:', apizer_output.asins_and_quantities);",
+            "variable": "",
+            "label": "Log ASINs và số lượng từ Track Package"
+        },
+        {
+            "action": "scripting",
+            "target": "const trackingElement = document.querySelector('.pt-delivery-card-trackingId'); if (trackingElement) { const trackingText = trackingElement.textContent.trim(); const match = trackingText.match(/Tracking ID:\\s*(\\S+)/); return match ? match[1] : 'Tracking ID not found'; } return 'Tracking ID element not found';",
+            "variable": "tracking_number",
+            "label": "Trích xuất Tracking Number"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('Tracking Number:', apizer_output.tracking_number);",
+            "variable": "",
+            "label": "Log Tracking Number"
+        },
+        {
+            "action": "scripting",
+            "target": "const orderLinks = []; document.querySelectorAll('a[href*=\"order-details?orderID=\"]').forEach(element => { orderLinks.push(element.href); }); return orderLinks;",
+            "variable": "order_links",
+            "label": "Trích xuất Order Detail Links"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('Order detail links:', apizer_output.order_links);",
+            "variable": "",
+            "label": "Log Order Detail Links"
+        },
+        {
+            "action": "set_var",
+            "target": "0",
+            "variable": "currentIndex",
+            "label": "Khởi tạo biến chỉ mục"
+        },
+        {
+            "action": "set_var",
+            "target": "[]",
+            "variable": "final_results",
+            "label": "Khởi tạo mảng kết quả cuối cùng"
+        },
+        {
+            "action": "while",
+            "target": "apizer_output.currentIndex < apizer_output.order_links.length",
+            "variable": "",
+            "label": "Lặp qua từng Order Detail"
+        },
+        {
+            "action": "scripting",
+            "target": "window.location.assign(apizer_output.order_links[apizer_output.currentIndex]);",
+            "variable": "dummy",
+            "label": "Truy cập vào link Order Detail"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "5000"
+        },
+        {
+            "action": "scripting",
+            "target": "const asinLinks = document.querySelectorAll('a[href*=\"/gp/product/\"]'); const asinsFromOrder = []; asinLinks.forEach(link => { const href = link.getAttribute('href'); const asinMatch = href.match(/\\/gp\\/product\\/([^/?]+)/); if (asinMatch && !asinsFromOrder.includes(asinMatch[1])) { asinsFromOrder.push(asinMatch[1]); } }); return asinsFromOrder;",
+            "variable": "asins_from_order",
+            "label": "Trích xuất Asin từ Order Detail"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('ASINs from order detail:', apizer_output.asins_from_order);",
+            "variable": "",
+            "label": "Log ASINs từ Order Detail"
+        },
+        {
+            "action": "scripting",
+            "target": "function matchAsins(asinsFromPackage, asinsFromOrder) { return asinsFromOrder.filter(asin => asinsFromPackage.includes(asin)); } return matchAsins(apizer_output.asins_and_quantities.asins, apizer_output.asins_from_order);",
+            "variable": "matched_asins",
+            "label": "Đối chiếu danh sách Asin"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('Matched ASINs:', apizer_output.matched_asins);",
+            "variable": "",
+            "label": "Log ASINs khớp"
+        },
+        {
+            "action": "if",
+            "target": "apizer_output.matched_asins.length > 0",
+            "variable": "",
+            "label": "Kiểm tra match"
+        },
+        {
+            "action": "scripting",
+            "target": "const orderIdElement = document.querySelector('span.order-date-invoice-item bdi'); return orderIdElement ? orderIdElement.textContent.trim() : 'No Order ID found';",
+            "variable": "order_id",
+            "label": "Trích xuất Order ID"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('Order ID:', apizer_output.order_id);",
+            "variable": "",
+            "label": "Log Order ID"
+        },
+        {
+            "action": "scripting",
+            "target": "function createResultObject(matchedAsins, orderId, trackingNumber, quantities) { return matchedAsins.map((asin, index) => ({ asin: asin, orderId: orderId, trackingNumber: trackingNumber, quantity: quantities[index] })); } return createResultObject(apizer_output.matched_asins, apizer_output.order_id, apizer_output.tracking_number, apizer_output.asins_and_quantities.quantities);",
+            "variable": "new_results",
+            "label": "Tạo đối tượng kết quả mới với số lượng"
+        },
+        {
+            "action": "set_var",
+            "target": "apizer_output.final_results.concat(apizer_output.new_results);",
+            "variable": "final_results",
+            "label": "Lưu kết quả vào mảng final_results"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('Current results after adding:', apizer_output.final_results);",
+            "variable": "",
+            "label": "Log kết quả sau mỗi lần thêm"
+        },
+        {
+            "action": "set_var",
+            "target": "apizer_output.currentIndex + 1",
+            "variable": "currentIndex",
+            "label": "Tăng chỉ mục"
+        },
+        {
+            "action": "scroll",
+            "target": "0",
+            "variable": "",
+            "label": "Cuộn lên đầu trang"
+        },
+        {
+            "action": "history_go",
+            "target": "-1",
+            "variable": "",
+            "label": "Quay lại trang trước"
+        },
+        {
+            "action": "endwhile",
+            "target": "",
+            "variable": ""
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "5000"
+        },
+        {
+            "action": "scripting",
+            "target": "console.log('Final results:', apizer_output.final_results);",
+            "variable": "",
+            "label": "Log kết quả cuối cùng"
+        },
+        {
+            "action": "end_worker",
+            "target": "",
+            "variable": "",
+            "label": "Kết thúc worker"
+        }
+    ]
+}
