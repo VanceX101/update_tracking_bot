@@ -43,7 +43,7 @@ This project is designed to automate the process of extracting tracking informat
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/amazon-tracking-automation.git
+   git clone https://github.com/your-username/amazon-tracking-bot.git
    cd amazon-tracking-automation
 2. Configure the Amazon login credentials and API keys for Fado and GiaoNhan247.
 
