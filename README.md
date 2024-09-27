@@ -36,8 +36,8 @@ This project is designed to automate the process of extracting tracking informat
 
 ### Prerequisites
 
-- **n8n**: Install n8n from the [official website](https://n8n.io/) or via Docker.
-- **AI Browser**: Ensure the AI Browser automation scripts are correctly set up to log into Amazon and extract tracking information.
+- **n8n**: Install n8n from the [official websit](https://n8n.io/) or via Docker.
+- **AI Browser**: Ensure the AI Browser automation scripts are correctly set up to log into Amazon and extract tracking information power by Conductify 
 
 ### Steps
 
