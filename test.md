@@ -1,34 +1,40 @@
-# Release Notes - Tracking Worker v2.0.0
+# 🚀 **Release Notes - Tracking Worker v2.0.0** 
 
-### Update Features:
-
-- **Mở rộng phạm vi xử lý cho các luồng đơn ghép, đơn gộp:**
-  - Đảm bảo việc lấy thông tin chính xác cho từng **ASIN** trong danh sách gói hàng (**package list**).
-  - Tương ứng chính xác với **Order ID** và **Tracking Number** để tránh nhầm lẫn trong việc cập nhật thông tin đơn hàng.
-
-- **Mở rộng phạm vi xử lý cho nền tảng Fado:**
-  - Cập nhật chính xác từng **item** dựa trên thông tin **amazon_tracking_info**.
-  - Nếu một **ASIN** có trong danh sách gói hàng từ Amazon mà được gắn với nhiều đơn hàng trên Fado, hệ thống sẽ cập nhật đúng số lượng đơn tương ứng cho từng **Order ID** liên quan.
-
-- **Xây dựng cơ chế double-check:**
-  - Cơ chế này giúp kiểm tra và đối chiếu lại thông tin tracking để đảm bảo dữ liệu được cập nhật chính xác, tránh trùng lặp hoặc sai sót trong quá trình xử lý thông tin từ Amazon và Fado.
-
-- **Cập nhật ghi chú bổ sung:**
-  - Hệ thống sẽ tự động ghi chú với format: `"Bot was here: updated tracking for item {item_id}"`, giúp người dùng dễ dàng theo dõi quá trình tự động cập nhật của bot.
+📅 **Release Date:** 27-09-2024  
+👤 **Published by:** *Vance Nguyen*
 
 ---
 
-### Bug Fixes:
-- Đã khắc phục một số lỗi nhỏ liên quan đến việc ghép đơn và gộp đơn hàng không chính xác.
-- Tăng độ chính xác và độ ổn định khi cập nhật tracking cho các đơn hàng lớn.
+## 🎉 **New Features**:
+
+- **🔄 Mở rộng phạm vi xử lý cho các luồng đơn ghép, đơn gộp:**
+  - ✅ **Chính xác hơn bao giờ hết**: Đảm bảo lấy đúng thông tin cho từng **ASIN** trong danh sách gói hàng.
+  - 🆔 Kết nối chính xác giữa **Order ID** và **Tracking Number** giúp quá trình xử lý đơn hàng liền mạch và không sai sót.
+
+- **🌐 Mở rộng phạm vi xử lý cho nền tảng Fado:**
+  - 📦 Cập nhật chính xác **item** từ thông tin **amazon_tracking_info**.
+  - 📊 **Thông minh hơn**: Khi một **ASIN** từ Amazon có nhiều đơn hàng trên Fado, hệ thống sẽ tự động xử lý đúng số lượng đơn và cập nhật theo từng **Order ID**.
+
+- **🛡️ Cơ chế Double-check**:
+  - 🔍 **Kiểm tra hai lần, đảm bảo chính xác 100%**: Cơ chế double-check giúp xác thực dữ liệu trước khi cập nhật, hạn chế tối đa lỗi xảy ra trong quá trình xử lý.
+
+- **📝 Ghi chú cập nhật:**
+  - Bot sẽ tự động thêm ghi chú với định dạng: `"Bot was here: updated tracking for item {item_id}"` giúp bạn dễ dàng theo dõi tiến trình cập nhật.
 
 ---
 
-### Enhancements:
-- Cải thiện tốc độ xử lý tracking với các gói hàng có nhiều **ASIN** hoặc **Order ID**.
-- Tăng khả năng tương thích với nhiều luồng đơn hàng phức tạp từ Amazon và Fado.
+## 🐛 **Bug Fixes**:
+- 🔧 **Khắc phục các lỗi nhỏ** liên quan đến việc ghép và gộp đơn không chính xác.
+- 🚀 **Tăng độ chính xác** và cải thiện độ ổn định cho hệ thống khi xử lý các đơn hàng lớn.
 
 ---
 
-**Version:** 2.0.0  
-**Release Date:** 27-09-2024
+## ⚙️ **Enhancements**:
+- 💨 **Tốc độ xử lý nhanh hơn**: Cải thiện hiệu năng xử lý tracking cho các gói hàng phức tạp với nhiều **ASIN** và **Order ID**.
+- 🤖 **Tối ưu hóa** khả năng tương thích với các luồng đơn hàng từ Amazon và Fado.
+
+---
+
+🔗 **Version:** 2.0.0  
+👨‍💻 **Publisher:** Vance Nguyen  
+📅 **Release Date:** 27-09-2024  
