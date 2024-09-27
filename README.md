@@ -4,7 +4,7 @@
 
 This project is designed to automate the process of extracting tracking information from Amazon orders and updating it across the internal platforms of **Fado** and **GiaoNhan247**. The system integrates multiple technologies to ensure reliable and efficient tracking data management, using AI-driven browsers and workflow automation tools.
 
-## Technologies Used
+## Technologies Stack Used
 
 - **AI Browser**: Automates the extraction of tracking information from Amazon, simulating user actions like logging into accounts and navigating through emails or order pages to gather the required tracking data.
   
@@ -50,7 +50,8 @@ This project is designed to automate the process of extracting tracking informat
 3. Set up the n8n workflows as per the configuration files in the /workflows directory.
 
 4. Run the n8n instance:
-n8n start
+   ```bash
+   n8n start
 
 5. Set up the AI Browser to run on a schedule or trigger it based on order status updates.
 
