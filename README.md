@@ -43,30 +43,4 @@ This project is designed to automate the process of extracting tracking informat
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/amazon-tracking-bot.git
-   cd amazon-tracking-automation
-2. Configure the Amazon login credentials and API keys for Fado and GiaoNhan247.
-
-3. Set up the n8n workflows as per the configuration files in the /workflows directory.
-
-4. Run the n8n instance:
-   ```bash
-   n8n start
-
-5. Set up the AI Browser to run on a schedule or trigger it based on order status updates.
-
-## Project Structure
-
-```bash
-amazon-tracking-automation/
-├── README.md
-├── ai-browser-scripts/
-│   └── amazon-tracking.js
-├── workflows/
-│   ├── fado-tracking-update.json
-│   └── giaonhan247-tracking-update.json
-└── config/
-    └── credentials.json
-
-Project Owner: Vance Nguyen
-Email: vance.nguyen@example.com
+   git clone https://github.com/your-username/gmail.com
