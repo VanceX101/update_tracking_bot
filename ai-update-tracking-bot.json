@@ -1,0 +1,118 @@
+{
+  "input": {
+    "comment": "Bot này đang chạy ổn định, tuy nhiên ở step cuối cùng cập nhật note thì đang không hoạt động",
+    "api_key": "apizer_fado_vn-f3f38924",
+    "fado_order_id": "747328",
+    "fado_item_id": "1005593",
+    "amazon_asin": "B0D1Q8ZNXG",
+    "trang_thai": "Đã có Tracking - Chờ hàng về",
+    "ghi_chu": "Bot was here",
+    "tracking_number": "ABC123456",
+    "estimated_delivery": "28/09/2024",
+    "quantity": 1,
+    "content": "WorkerBot AI",
+    "url": "https://fado.vn/backend/order/view/id/760650/"
+  },
+  "action": [
+    {
+      "action": "goto",
+      "target": "https://fado.vn/backend/",
+      "variable": "",
+      "_selected": false
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "2000",
+      "label": "Chờ load trang"
+    },
+    {
+      "action": "scripting",
+      "target": "window.location.assign(apizer_input.url);",
+      "label": "Đi đến trang đơn hàng",
+      "variable": "dummy"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "5000",
+      "label": "Chờ các item_id xuất hiện"
+    },
+    {
+      "action": "scripting",
+      "target": "var rows = document.querySelectorAll('tbody tr');\nvar foundRow = false;\nrows.forEach(function(row) {\n    var itemIdElement = row.querySelector('td[data-title=\"Mã SP\"] a');\n    if (itemIdElement && itemIdElement.textContent.trim() === apizer_input.fado_item_id) {\n        foundRow = row;\n    }\n});\nif (foundRow) {\n    var selectElement = foundRow.querySelector('select.status');\n    var isStatusFound = false;\n    for (var i = 0; i < selectElement.options.length; i++) {\n        if (selectElement.options[i].text.trim() === apizer_input.trang_thai) {\n            selectElement.options[i].selected = true;\n            var event = new Event('change', { bubbles: true });\n            selectElement.dispatchEvent(event);\n            isStatusFound = true;\n            break;\n        }\n    }\n    if (!isStatusFound) {\n        console.error('Trạng thái không tồn tại trong danh sách');\n    }\n} else {\n    console.error('Không tìm thấy item có fado_item_id phù hợp');\n}",
+      "variable": "dummy",
+      "label": "Tìm và chọn item_id phù hợp"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "2000",
+      "label": "Chờ cập nhật trạng thái"
+    },
+    {
+      "action": "click",
+      "target": "body > div.bootbox.modal.fade.bootbox-confirm.in > div > div > div.modal-footer > button.btn.btn-primary",
+      "label": "Xác nhận cập nhật trạng thái"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "5000",
+      "label": "Chờ cập nhật hoàn thành"
+    },
+    {
+      "action": "input",
+      "target": "#fullName",
+      "variable": "apizer_input.tracking_number",
+      "label": "Dán mã tracking"
+    },
+    {
+      "action": "scripting",
+      "target": "document.querySelector('input.arrivalDate').value = apizer_input.estimated_delivery",
+      "variable": "dummy",
+      "label": "Cập nhật ngày giao hàng dự kiến"
+    },
+    {
+      "action": "scripting",
+      "target": "document.querySelector('.arrivedQuantity').value = apizer_input.quantity",
+      "variable": "dummy",
+      "label": "Cập nhật số lượng"
+    },
+    {
+      "action": "click",
+      "target": "body > div.bootbox.modal.fade.width-100.in > div > div > div.modal-footer > button",
+      "variable": "",
+      "label": "Click OK để lưu cập nhật"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "3000",
+      "label": "Chờ hoàn tất cập nhật tracking"
+    },
+    {
+      "action": "extract",
+      "target": "#main-content > section > section > div.alert.alert-success.alert-block.fade.in > p",
+      "variable": "update_result",
+      "label": "Xác nhận cập nhật thành công"
+    },
+    {
+      "action": "scripting",
+      "target": "const now = new Date().toLocaleString();\nconst iframe = document.querySelector('#mceu_43 > #test_ifr');\nconst iframeBody = iframe.contentWindow.document.querySelector(\"body\");\nconst paragraph = iframeBody.ownerDocument.createElement(\"p\");\nparagraph.textContent ='&#129302; ' + now + ' - Bot was here: updated for item <strong>' + apizer_input.fado_item_id + '</strong> with tracking number <strong>' + apizer_input.tracking_number + '</strong>';\niframeBody.appendChild(paragraph);",
+      "variable": "dummy",
+      "label": "Ghi chú cập nhật tracking"
+    },
+    {
+      "action": "click",
+      "target": "#main-content > section > section > div:nth-child(4) > div > div.col-sm-12 > div:nth-child(1) > div > form:nth-child(3) > div > button",
+      "variable": "",
+      "label": "Click cập nhật ghi chú"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "5000"
+    }
+  ]
+}
