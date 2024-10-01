@@ -1,4 +1,4 @@
--- Truy vấn chính để tìm item_id với cả asin và private_note
+-- Truy vấn chính để tìm item_id với cho TH1: cả asin và private_note
 WITH PrimaryResults AS (
     SELECT
         order_items.order_item_id, 
@@ -7,7 +7,7 @@ WITH PrimaryResults AS (
         order_items.item_status,
         order_items.quantity AS fado_quantity,
         order_items.tracking_number,
-        order_items.product_name  -- Thêm trường product_name
+        order_items.product_name 
     FROM
         order_items
     INNER JOIN
@@ -19,7 +19,7 @@ WITH PrimaryResults AS (
         AND order_items.item_status NOT IN (-4, 0)
 )
 
--- Kiểm tra xem có kết quả không, nếu không có thì thực hiện truy vấn thứ hai
+-- Kiểm tra xem có kết quả không, nếu không trả về item record nào thì thực hiện truy vấn thứ hai
 SELECT *
 FROM PrimaryResults
 UNION ALL
@@ -30,7 +30,7 @@ SELECT
     order_items.item_status,
     order_items.quantity AS fado_quantity,
     order_items.tracking_number,
-    order_items.product_name  -- Thêm trường product_name
+    order_items.product_name  
 FROM
     order_items
 INNER JOIN
