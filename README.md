@@ -43,4 +43,4 @@ This project is designed to automate the process of extracting tracking informat
 
 1. Clone the repository:
    ```bash
-   [git clone https://github.com/your-username/gmail.com](https://github.com/VanceX101/update_tracking_bot.git)
+   git clone https://github.com/VanceX101/update_tracking_bot.git
