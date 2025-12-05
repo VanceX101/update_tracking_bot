@@ -1,0 +1,340 @@
+{
+  "input": {
+    "comment": "16/06/2024 – Bản này đã có 4 luồng if để check: (1) Đơn Amazon không có đơn Giaonhan, (2) Đơn Amazon nhiều đơn Giaonhan, (3) Đơn Giaonhan nhiều item, và (4) Đơn Giaonhan đã được cập nhật tracking.",
+    "api_key": "apizer_v2_giaonhan247_com-e9d77210",
+    "user_name": "titantruong11024@gmail.com",
+    "pass_word": "ilovefado11024",
+    "order_id": "28-11081-4919455",
+    "tracking_id": "TESTBOT650084103885",
+    "estimated_delivery": "30/06/2024",
+    "quantity": "1",
+    "ghi_chu": "Bot was here"
+  },
+  "action": [
+    {
+      "action": "goto",
+      "target": "https://v2.giaonhan247.com/backend/login",
+      "variable": "",
+      "label": "Vào login"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "2000"
+    },
+    {
+      "action": "input",
+      "target": "body > div.middle-box.text-center.loginscreen.animated.fadeInDown > div > section > section > form > div:nth-child(1) > input",
+      "variable": "apizer_input.user_name",
+      "label": "Input username"
+    },
+    {
+      "action": "input",
+      "target": "body > div.middle-box.text-center.loginscreen.animated.fadeInDown > div > section > section > form > div:nth-child(2) > input",
+      "variable": "apizer_input.pass_word",
+      "label": "Input password"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "1000"
+    },
+    {
+      "action": "click",
+      "target": "body > div.middle-box.text-center.loginscreen.animated.fadeInDown > div > section > section > form > button",
+      "variable": "",
+      "label": "Đăng nhập"
+    },
+    {
+      "action": "click",
+      "target": "#page-wrapper > div.wrapper.wrapper-content.animated.fadeInRight > div > div.ibox.float-e-margins > div.ibox-content.m-b-sm.border-bottom.cs-inbox-content > form > div:nth-child(8) > div:nth-child(3) > div > div.col-xs-7.no-padding > input",
+      "variable": ""
+    },
+    {
+      "action": "goto",
+      "target": "https://v2.giaonhan247.com/backend/order",
+      "variable": ""
+    },
+    {
+      "action": "scripting",
+      "target": "document.querySelector('#page-wrapper > div.wrapper.wrapper-content.animated.fadeInRight > div > div.ibox.float-e-margins > div.ibox-content.m-b-sm.border-bottom.cs-inbox-content > form > div:nth-child(8) > div:nth-child(3) > div > div.col-xs-7.no-padding > input').value = apizer_input.order_id",
+      "variable": "dummy\n",
+      "label": "Nhập order id vào phần tìm kiếm ghi chú nội bộ",
+      "option": "0"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "1000",
+      "label": "Đợi - phòng trường hợp chưa nhận scripting"
+    },
+    {
+      "action": "click",
+      "target": "#page-wrapper > div.wrapper.wrapper-content.animated.fadeInRight > div > div.ibox.float-e-margins > div.ibox-content.m-b-sm.border-bottom.cs-inbox-content > form > div:nth-child(17) > div > button",
+      "variable": "",
+      "label": "Click tìm kiếm"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "2000"
+    },
+    {
+      "action": "extract",
+      "target": "#page-wrapper > div.wrapper.wrapper-content.animated.fadeInRight > div > div.row > div > div > ul > li.tab-order.active > a > strong",
+      "variable": "count_order"
+    },
+    {
+      "action": "if",
+      "target": "apizer_var.count_order == \"( 0 đơn hàng )\"",
+      "variable": ""
+    },
+    {
+      "action": "set_var",
+      "target": "\"Đơn Amazon không có đơn Giaonhan\"",
+      "variable": "out_of_scope_note"
+    },
+    {
+      "action": "click",
+      "target": "#navbar > ul:nth-child(2) > li > a",
+      "variable": "",
+      "label": "Log out"
+    },
+    {
+      "action": "stop",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "endif",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "if",
+      "target": "apizer_var.count_order !== \"( 1 đơn hàng )\"",
+      "variable": ""
+    },
+    {
+      "action": "set_var",
+      "target": "\"Đơn Amazon nhiều đơn Giaonhan\"",
+      "variable": "out_of_scope_note"
+    },
+    {
+      "action": "click",
+      "target": "#navbar > ul:nth-child(2) > li > a",
+      "variable": "",
+      "label": "Log out"
+    },
+    {
+      "action": "stop",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "endif",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "scripting",
+      "target": "var product_id = document.querySelector('#DataTables_Table_0 > tbody > tr > td.text-center.vertical-align-middle.sorting_1').textContent.replaceAll(\"\\n\",\"\").trim()\n\nvar url = \"https://v2.giaonhan247.com/backend/order/edit/\" + product_id;\n\nwindow.location.assign(url);",
+      "variable": "dummy",
+      "label": "Lưu product id rồi goto url. Để xử lý trường hợp bị mở tab mới",
+      "option": "0"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "1000"
+    },
+    {
+      "action": "extract",
+      "target": "#tab-1 > div > div.col-md-8.ibox-content.loadingInfo.clear-ibox-content.left-panel > div.ibox.allRow > div.ibox-title > label > strong:nth-child(2)",
+      "variable": "count_item"
+    },
+    {
+      "action": "if",
+      "target": "apizer_var.count_item !== \"(1 items)\"",
+      "variable": ""
+    },
+    {
+      "action": "set_var",
+      "target": "\"Đơn Giaonhan nhiều item\"",
+      "variable": "out_of_scope_note"
+    },
+    {
+      "action": "click",
+      "target": "#navbar > ul:nth-child(2) > li > a",
+      "variable": "",
+      "label": "Log out"
+    },
+    {
+      "action": "stop",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "endif",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "scripting",
+      "target": "return document.querySelector('.order__tracking-status--late').innerText",
+      "variable": "tracking_status",
+      "option": "0"
+    },
+    {
+      "action": "if",
+      "target": "apizer_var.tracking_status !== \"Đã mua hàng\"",
+      "variable": ""
+    },
+    {
+      "action": "set_var",
+      "target": "\"Đơn này không ở trạng thái phù hợp để cập nhật tracking\"",
+      "variable": "out_of_scope_note"
+    },
+    {
+      "action": "click",
+      "target": "#navbar > ul:nth-child(2) > li > a",
+      "variable": "",
+      "label": "Log out"
+    },
+    {
+      "action": "stop",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "endif",
+      "target": "",
+      "variable": ""
+    },
+    {
+      "action": "click",
+      "target": "#tab-1 > div > div.col-md-8.ibox-content.loadingInfo.clear-ibox-content.left-panel > div.ibox.allRow > div.ibox-title > span > div > ins",
+      "variable": "",
+      "label": "Click checkbox"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "500"
+    },
+    {
+      "action": "click",
+      "target": "body > div.menu-scroll > ul > li.show-icon.btn-updateTracking > a > i",
+      "variable": "",
+      "label": "Click Cập nhật tracking ở rightside menu"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "2000"
+    },
+    {
+      "action": "click",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > div:nth-child(1) > input",
+      "variable": "",
+      "label": "Click estimated_delivery"
+    },
+    {
+      "action": "input",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > div:nth-child(1) > input",
+      "variable": "apizer_input.estimated_delivery",
+      "label": "Dán estimated_delivery"
+    },
+    {
+      "action": "click",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > div.form-group.col-xs-4.no-padding.text-left > input",
+      "variable": "",
+      "label": "Click tracking id"
+    },
+    {
+      "action": "typing",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > div.form-group.col-xs-4.no-padding.text-left > input",
+      "variable": "apizer_input.tracking_id",
+      "label": "Dán tracking id"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "3000"
+    },
+    {
+      "action": "click",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > div:nth-child(4) > a",
+      "variable": "",
+      "label": "Click quét"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "3000"
+    },
+    {
+      "action": "click",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > table > tbody > tr > td.content > p > span:nth-child(3) > span.text-center > input",
+      "variable": "",
+      "label": "Click ô số lượng item"
+    },
+    {
+      "action": "input",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > table > tbody > tr > td.content > p > span:nth-child(3) > span.text-center > input",
+      "variable": "apizer_input.quantity",
+      "label": "Input số lượng"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "3000"
+    },
+    {
+      "action": "click",
+      "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-footer > button.btn.btn-primary.btn-save",
+      "variable": "",
+      "label": "Click lưu thay đổi"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "3000"
+    },
+    {
+      "action": "click",
+      "target": "#tab-1 > div > div.col-md-4.right-panel > div > ul > li.btn-tabC2 > a > img",
+      "variable": "",
+      "label": "Thêm ghi chú"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "3000"
+    },
+    {
+      "action": "scripting",
+      "target": "// Lấy danh sách tất cả các textbox có class là '.note-editable.panel-body' --> Nếu 2 textbox cùng class --> Lấy textbox thứ 2\nconst editableDivList = document.querySelectorAll('.note-editable.panel-body');\nif (editableDivList.length >= 2) {\n    const editableDivB = editableDivList[1];\n\n    // Tạo đối tượng <p> mới và cập nhật nội dung\n    const paragraph = editableDivB.ownerDocument.createElement(\"p\");\n    paragraph.textContent = apizer_input.ghi_chu;\n    editableDivB.appendChild(paragraph);\n\n    // Gọi inputEvent và thực hiện eventchange để xác nhận thay đổi cho textbox\n    const inputEvent = new Event('input');\n    editableDivB.dispatchEvent(inputEvent);\n\n    const changeEvent = new Event('change');\n    editableDivB.dispatchEvent(changeEvent);\n\n    // Lấy danh sách tất cả các nút \"Lưu\" có class '.btn-saveNote' --> Nếu nhiều nút lưu có cùng class --> Click nút Lưu thứ 2 \n    const saveButtons = document.querySelectorAll('.btn-saveNote');\n    if (saveButtons.length >= 2) {\n        const secondSaveButton = saveButtons[1];\n        secondSaveButton.click();\n    }\n}",
+      "variable": "dummy",
+      "option": "0"
+    },
+    {
+      "action": "wait",
+      "target": "",
+      "variable": "3000"
+    },
+    {
+      "action": "extract",
+      "target": "#ibox1 > div > div.row > div > ul > li.tracking-status > a",
+      "variable": "update_result",
+      "_selected": false,
+      "label": "Xác nhận cập nhật thành công"
+    },
+    {
+      "action": "click",
+      "target": "#navbar > ul:nth-child(2) > li > a",
+      "variable": "",
+      "label": "Log out"
+    }
+  ]
+}
