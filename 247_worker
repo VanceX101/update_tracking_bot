@@ -1,0 +1,155 @@
+{
+    "input": {
+        "comment": "16/06/2024 – #lastest ver - Update thêm cập nhật ghi chú, Bản này đã có 4 luồng if để check: (1) Đơn Amazon không có đơn Giaonhan, (2) Đơn Amazon nhiều đơn Giaonhan, (3) Đơn Giaonhan nhiều item, và (4) Đơn Giaonhan đã được cập nhật tracking.",
+        "api_key": "apizer_v2_giaonhan247_com-e9d77210",
+        "item_id": "2115368",
+        "user_name": "titantruong11024@gmail.com",
+        "pass_word": "ilovefado11024",
+        "order_id": "29-11081-4919456",
+        "tracking_id": "TPATEST65008410388",
+        "estimated_delivery": "30/06/2024",
+        "quantity": "1",
+        "order_link": "https://v2.giaonhan247.com/backend/order/edit/1771578",
+        "ghi_chu": "Bot was here"
+    },
+    "action": [
+        {
+            "action": "goto",
+            "target": "https://v2.giaonhan247.com/backend/order",
+            "variable": "",
+            "label": "Vào login"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "3000"
+        },
+        {
+            "action": "scripting",
+            "target": "window.location.assign(apizer_input.order_link);",
+            "variable": "dummy",
+            "label": "Vào trang Order"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "3000"
+        },
+        {
+            "action": "scripting",
+            "target": "const itemId = apizer_input.item_id;\nconst checkbox = document.querySelector(`#frm_${itemId} > div > div.ibox.float-e-margins.itemRow > div.ibox-title > table > tbody > tr > td.text-right > div.icheckbox_square-green > ins`);\nif (checkbox) {\n    checkbox.click();\n}",
+            "variable": "dummy",
+            "label": "Tick checkbox đúng theo item_id"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "4000"
+        },
+        {
+            "action": "click",
+            "target": "body > div.menu-scroll > ul > li.show-icon.btn-updateTracking > a > i",
+            "variable": "",
+            "label": "Click Cập nhật tracking ở rightside menu"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "2000"
+        },
+        {
+            "action": "click",
+            "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > div:nth-child(1) > input",
+            "variable": "",
+            "label": "Click estimated_delivery"
+        },
+        {
+            "action": "input",
+            "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-body > div > div > div.wrapper > div:nth-child(1) > input",
+            "variable": "apizer_input.estimated_delivery",
+            "label": "Dán estimated_delivery"
+        },
+        {
+            "step_number": 13,
+            "label": "Cập nhật giá trị tracking",
+            "action": "scripting",
+            "target": "const trackingInput = document.querySelector('input[name=\"tracking_number\"]');\ntrackingInput.value = apizer_input.tracking_id; // Thay bằng giá trị tracking ID từ input\n\n// Kích hoạt sự kiện paste để hệ thống nhận diện giá trị mới\nconst pasteEvent = new ClipboardEvent('paste', { bubbles: true });\ntrackingInput.dispatchEvent(pasteEvent);",
+            "variable": "dummy"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "1000"
+        },
+        {
+            "label": "Dán tracking id",
+            "action": "scripting",
+            "target": "const trackingInput = document.querySelector('input[name=\"tracking_number\"]');\ntrackingInput.focus();\n\n// Tạo sự kiện nhấn phím\nconst event = new KeyboardEvent('keydown', {\n    bubbles: true,\n    cancelable: true,\n    key: 'v',\n    ctrlKey: true\n});\ntrackingInput.dispatchEvent(event);\n\n// Thêm một sự kiện keyup để hoàn tất\nconst eventUp = new KeyboardEvent('keyup', {\n    bubbles: true,\n    cancelable: true,\n    key: 'v',\n    ctrlKey: true\n});\ntrackingInput.dispatchEvent(eventUp);\n",
+            "variable": "dummy"
+        },
+        {
+            "label": "Wait sau khi click quét",
+            "action": "wait",
+            "target": "",
+            "variable": "2000"
+        },
+        {
+            "action": "click",
+            "target": "body > div.bootbox.modal.fade.in > div > div > div.wrapper > table > tbody > tr > td.content > p > span:nth-child(3) > span.text-center > input",
+            "variable": "",
+            "label": "Click ô số lượng item"
+        },
+        {
+            "action": "scripting",
+            "target": "const inputElement = document.querySelector('input[name=\"tracking_quantity\"][data-tracking=\"' + apizer_input.tracking_id + '\"]');\nif (inputElement) {\n    inputElement.value = apizer_input.quantity;\n    inputElement.dispatchEvent(new Event('input'));\n    inputElement.dispatchEvent(new Event('change'));\n}",
+            "variable": "dummy",
+            "label": "Input số lượng"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "2000"
+        },
+        {
+            "action": "click",
+            "target": "body > div.bootbox.modal.fade.in > div > div > div.modal-footer > button.btn.btn-primary.btn-save",
+            "variable": "",
+            "label": "Click lưu thay đổi"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "3000"
+        },
+        {
+            "action": "click",
+            "target": "#tab-1 > div > div.col-md-4.right-panel > div > ul > li.btn-tabC2 > a > img",
+            "variable": "",
+            "label": "Thêm ghi chú"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "2000",
+            "option": ""
+        },
+        {
+            "action": "scripting",
+            "target": "// Lấy danh sách tất cả các textbox có class là '.note-editable.panel-body' --> Nếu có nhiều textbox cùng class --> Lấy textbox đầu tiên\nconst editableDivList = document.querySelectorAll('.note-editable.panel-body');\nif (editableDivList.length >= 1) {\n    const editableDivA = editableDivList[0];\n\n    // Thêm một dòng trống trước khi chèn ghi chú mới\n    const brElement = editableDivA.ownerDocument.createElement('br');\n    editableDivA.appendChild(brElement);\n\n    // Lấy thời gian hiện tại để định dạng thời gian thực hiện\n    const now = new Date();\n    const formattedDate = now.toLocaleDateString('vi-VN');\n    const formattedTime = now.toLocaleTimeString('vi-VN');\n    const timestamp = `${formattedDate} ${formattedTime}`;\n\n    // Tạo nội dung ghi chú mới với định dạng yêu cầu\n    const noteContent = `${timestamp} - Bot was here: Đã cập nhật tracking thành công cho Item ${apizer_input.item_id} với tracking number ${apizer_input.tracking_id}`;\n\n    // Tạo đối tượng <p> mới và cập nhật nội dung\n    const paragraph = editableDivA.ownerDocument.createElement(\"p\");\n    paragraph.textContent = noteContent;\n    editableDivA.appendChild(paragraph);\n\n    // Gọi inputEvent và thực hiện eventchange để xác nhận thay đổi cho textbox\n    const inputEvent = new Event('input');\n    editableDivA.dispatchEvent(inputEvent);\n\n    const changeEvent = new Event('change');\n    editableDivA.dispatchEvent(changeEvent);\n\n    // Lấy danh sách tất cả các nút \"Lưu\" có class '.btn-saveNote' --> Click nút Lưu đầu tiên\n    const saveButtons = document.querySelectorAll('.btn-saveNote');\n    if (saveButtons.length >= 1) {\n        const firstSaveButton = saveButtons[0];\n        firstSaveButton.click();\n    }\n}",
+            "variable": "dummy",
+            "option": "0",
+            "label": "Ghi chú thông tin cập nhật"
+        },
+        {
+            "action": "wait",
+            "target": "",
+            "variable": "3000"
+        },
+        {
+            "action": "scripting",
+            "target": "// Lấy item_id từ input\nconst targetItemId = apizer_input.item_id;\n\n// Tạo selector dựa vào item_id\nconst trackingIdSelector = `#frm_${targetItemId} > div > div.ibox.float-e-margins.itemRow > div.ibox-title > table > tbody > tr > td.desc > p:nth-child(4)`;\n\n// Tìm element chứa tracking_id\nconst trackingIdElement = document.querySelector(trackingIdSelector);\n\nlet trackingIdExists = false;\nlet trackingId = \"\";\n\n// Kiểm tra xem element có tồn tại và tìm tracking_id trong thẻ <a> bên trong <p>\nif (trackingIdElement) {\n    const trackingAnchor = trackingIdElement.querySelector('.tracking-content a'); // Tìm thẻ <a> bên trong thẻ <p>\n    \n    if (trackingAnchor) {\n        trackingId = trackingAnchor.textContent.trim(); // Lấy nội dung của thẻ <a>\n        trackingIdExists = true;\n    }\n}\n\n// Khởi tạo apizer_output nếu chưa có\nif (!apizer_output) {\n    apizer_output = {};\n}\n\n// Xử lý kết quả và gán giá trị cho apizer_output.tracking_status\nif (trackingIdExists && trackingId) {\n    console.log(\"Tracking ID:\", trackingId);\n    apizer_output.update_result = 'Success';\n    apizer_output.status_message = 'Tracking ID đã được tìm thấy: ' + trackingId;\n    apizer_output.tracking_status = 'Tracking ID found: ' + trackingId;\n} else {\n    console.log(\"Không tìm thấy Tracking ID.\");\n    apizer_output.update_result = 'Failed';\n    apizer_output.status_message = 'Không tìm thấy Tracking ID. Vui lòng kiểm tra lại.';\n    apizer_output.tracking_status = 'Tracking ID not found';\n}\n\n// Return apizer_output để đảm bảo tracking_status được trả về\nreturn apizer_output;",
+            "variable": "apizer_output",
+            "label": "Xác nhận cập nhật thành công"
+        }
+    ]
+}
